@@ -12,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BoredealsAppAndroid"
         tools:targetApi="31">
+        <activity android:name=".CodeActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
