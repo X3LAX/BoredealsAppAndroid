@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">BoredealsAppAndroid</string>
+    <string-array name="characters">
+        <item>HP</item>
+        <item>SAMSUNG</item>
+        <item>NIKE</item>
+        <item>DIESEL</item>
+        <item>APPLE</item>
+        <item>LV</item>
+    </string-array>
+
+    <string-array name="description">
+        <item>Le printemps des étudiants : Jusqu\'à -30% 🤑👩‍💻🌱</item>
+        <item>Jusqu\'à -60% + -10% en plus</item>
+        <item>Jusqu\'à -30%</item>
+        <item>Jusqu\'à -60% + -10% en plus</item>
+        <item>Jusqu\'à -30%</item>
+        <item>Jusqu\'à -60% + -10% en plus</item>
+    </string-array>
 </resources>

@@ -1,0 +1,54 @@
+<!-- item_offer.xml -->
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_margin="8dp"
+    android:backgroundTint="#53bcdf"
+    app:cardCornerRadius="8dp">
+
+    <!-- Contenu de l'offre -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="8dp">
+
+        <!-- Titre du magasin -->
+        <TextView
+            android:id="@+id/nameTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Description de l'offre -->
+        <TextView
+            android:id="@+id/descriptionTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginBottom="8dp"/>
+
+        <!-- Bouton "J'en profite" -->
+        <Button
+            android:id="@+id/button_j_en_profite"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="J'en profite"
+            android:backgroundTint="@color/black"/>
+
+        <!-- Logo QR Code -->
+        <ImageView
+            android:id="@+id/image_qr_code"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/qrlogo"
+            android:layout_marginStart="8dp"/>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>
