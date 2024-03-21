@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="8dp">
+        android:padding="10dp">
 
         <!-- Titre du magasin -->
         <TextView
@@ -34,6 +34,11 @@
             android:textSize="18sp"
             android:layout_marginBottom="8dp"/>
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"/>
+
         <!-- Bouton "J'en profite" -->
         <Button
             android:id="@+id/button_j_en_profite"
@@ -43,12 +48,12 @@
             android:backgroundTint="@color/black"/>
 
         <!-- Logo QR Code -->
-        <ImageView
+        <!-- <ImageView
             android:id="@+id/image_qr_code"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:src="@drawable/qrlogo"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="8dp"/> -->
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
