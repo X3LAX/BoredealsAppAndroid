@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="@font/mclaren"
-            android:text="Minecraft"
+            android:text="Boredeals"
             android:textColor="@android:color/black"
             android:textSize="40sp"
             android:textStyle="bold"
