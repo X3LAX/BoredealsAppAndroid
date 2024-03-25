@@ -30,4 +30,9 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
     public int getItemCount() {
         return storeList.size();
     }
+
+    public void setData(List<Store> storeList) {
+        this.storeList = storeList;
+        notifyDataSetChanged();
+    }
 }

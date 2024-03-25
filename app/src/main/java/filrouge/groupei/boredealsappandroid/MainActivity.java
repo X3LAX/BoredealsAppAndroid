@@ -9,9 +9,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -32,6 +34,31 @@ public class MainActivity extends AppCompatActivity {
         storeList = generateSampleData();
         storeAdapter = new StoreAdapter(storeList);
         recyclerView.setAdapter(storeAdapter);
+
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                List<Store> filteredStores = new ArrayList<>();
+                for (Store store : storeList) {
+                    if (store.getDiscountPercentage() >= progress) {
+                        filteredStores.add(store);
+                    }
+                }
+                storeAdapter.setData(filteredStores);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+                // Ne rien faire
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+                // Ne rien faire
+            }
+        });
+
     }
 
     private List<Store> generateSampleData() {
@@ -39,9 +66,11 @@ public class MainActivity extends AppCompatActivity {
 
         String[] names = getResources().getStringArray(R.array.characters);
         String[] descriptions = getResources().getStringArray(R.array.description);
+        Random random = new Random();
 
         for (int i = 0; i < names.length; i++) {
-            stores.add(new Store(names[i], descriptions[i]));
+            int discountPercentage = random.nextInt(41);
+            stores.add(new Store(names[i], descriptions[i], discountPercentage));
         }
 
         return stores;

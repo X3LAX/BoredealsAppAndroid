@@ -3,10 +3,12 @@ package filrouge.groupei.boredealsappandroid;
 public class Store {
     private String name;
     private String description;
+    private int discountPercentage;
 
-    public Store(String name, String description) {
+    public Store(String name, String description, int discountPercentage) {
         this.name = name;
         this.description = description;
+        this.discountPercentage = discountPercentage;
     }
 
     public String getName() {
@@ -15,6 +17,10 @@ public class Store {
 
     public String getDescription() {
         return description;
+    }
+
+    public int getDiscountPercentage() {
+        return discountPercentage;
     }
 }
 
