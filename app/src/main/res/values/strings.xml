@@ -12,11 +12,20 @@
     </string-array>
 
     <string-array name="description">
-        <item>Le printemps des étudiants : Jusqu\'à -30% 🤑👩‍💻🌱</item>
-        <item>Jusqu\'à -60% + -10% en plus</item>
+        <item>Le printemps des étudiants : Jusqu\'à -10% 🤑👩‍💻🌱</item>
+        <item>Jusqu\'à -20%</item>
         <item>Jusqu\'à -30%</item>
-        <item>Jusqu\'à -60% + -10% en plus</item>
-        <item>Jusqu\'à -30%</item>
-        <item>Jusqu\'à -60% + -10% en plus</item>
+        <item>Jusqu\'à -40%</item>
+        <item>Jusqu\'à -50%</item>
+        <item>Jusqu\'à -60%</item>
+    </string-array>
+
+    <string-array name="discount_percentages">
+        <item>10%</item>
+        <item>20%</item>
+        <item>30%</item>
+        <item>40%</item>
+        <item>50%</item>
+        <item>60%</item>
     </string-array>
 </resources>
