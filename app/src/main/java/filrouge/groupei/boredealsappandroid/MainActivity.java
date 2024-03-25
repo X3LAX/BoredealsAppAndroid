@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -70,35 +71,33 @@ public class MainActivity extends AppCompatActivity {
         storeAdapter = new StoreAdapter(storeList);
         recyclerView.setAdapter(storeAdapter);
 
-        SeekBar seekBar = findViewById(R.id.seekBar);
-        TextView percentageTextView = findViewById(R.id.percentageTextView);
 
-        seekBar.setMax(100);
+
+        SeekBar seekBar = findViewById(R.id.seekBar);
+        seekBar.setMax(20);
+        TextView percentageTextView = findViewById(R.id.percentageTextView);
 
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-                if (progress >= 0 && progress < getResources().getStringArray(R.array.discount_percentages).length) {
-                    String percentage = getResources().getStringArray(R.array.discount_percentages)[progress];
-                    percentageTextView.setText(percentage);
-                    List<Store> filteredStores = new ArrayList<>();
-                    for (Store store : storeList) {
-                        if (store.getDiscountPercentage() >= parsePercentage(percentage)) {
-                            filteredStores.add(store);
-                        }
+                int percentage = progress * 5;
+                percentageTextView.setText(String.valueOf(percentage) + "%");
+
+                List<Store> filteredStores = new ArrayList<>();
+                for (Store store : storeList) {
+                    if (store.getDiscountPercentage() >= percentage) {
+                        filteredStores.add(store);
                     }
-                    storeAdapter.setData(filteredStores);
                 }
+                storeAdapter.setData(filteredStores);
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // Ne rien faire
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // Ne rien faire
             }
         });
     }

@@ -9,15 +9,21 @@
         <item>DIESEL</item>
         <item>APPLE</item>
         <item>LV</item>
+        <item>HERMES</item>
+        <item>CHANNEL</item>
+        <item>GUCCI</item>
     </string-array>
 
     <string-array name="description">
-        <item>Le printemps des étudiants : Jusqu\'à -10% 🤑👩‍💻🌱</item>
+        <item>Jusqu\'à -10%</item>
         <item>Jusqu\'à -20%</item>
         <item>Jusqu\'à -30%</item>
         <item>Jusqu\'à -40%</item>
         <item>Jusqu\'à -50%</item>
         <item>Jusqu\'à -60%</item>
+        <item>Jusqu\'à -70%</item>
+        <item>Jusqu\'à -80%</item>
+        <item>Jusqu\'à -90%</item>
     </string-array>
 
     <string-array name="discount_percentages">
@@ -27,5 +33,8 @@
         <item>40%</item>
         <item>50%</item>
         <item>60%</item>
+        <item>70%</item>
+        <item>80%</item>
+        <item>90%</item>
     </string-array>
 </resources>
