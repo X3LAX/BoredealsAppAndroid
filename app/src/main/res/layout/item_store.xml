@@ -39,13 +39,33 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <!-- Bouton "J'en profite" -->
-        <Button
-            android:id="@+id/button_j_en_profite"
-            android:layout_width="wrap_content"
+        <!-- Boutons "J'en profite" et cloche -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="J'en profite"
-            android:backgroundTint="@color/black"/>
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/button_j_en_profite"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="J'en profite"
+                android:backgroundTint="@color/black"/>
+
+            <ImageButton
+                android:id="@+id/notifyBell"
+                android:layout_width="25dp"
+                android:layout_height="25dp"
+                android:background="@android:color/transparent"
+                android:contentDescription="Notify"
+                android:scaleType="centerCrop"
+                android:src="@drawable/bell"
+                android:layout_marginStart="20dp"
+                android:layout_marginTop="15dp"/>
+
+        </LinearLayout>
+
+
 
         <ImageButton
             android:id="@+id/notifyBell"
