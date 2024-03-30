@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CodeActivity"
-    android:background="#cbe1f6">
+    android:background="#cbe1f6"
+    tools:context=".CodeActivity">
 
     <ImageView
         android:id="@+id/imageNikeLogo"
         android:layout_width="100dp"
         android:layout_height="100dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:src="@drawable/logonike"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintTop_toTopOf="parent" />
 
     <!-- Texte "Partager avec un ami" -->
 
@@ -40,108 +39,149 @@
         android:id="@+id/imageShare"
         android:layout_width="26dp"
         android:layout_height="33dp"
+        android:layout_marginStart="12dp"
         android:src="@drawable/ts"
         app:layout_constraintStart_toEndOf="@id/textShareWithFriend"
-        app:layout_constraintTop_toTopOf="@id/textShareWithFriend"
-        android:layout_marginStart="12dp"/>
+        app:layout_constraintTop_toTopOf="@id/textShareWithFriend" />
 
 
     <View
         android:id="@+id/divider"
         android:layout_width="0dp"
         android:layout_height="2dp"
+        android:layout_marginTop="16dp"
         android:background="@android:color/black"
-        app:layout_constraintTop_toBottomOf="@id/imageNikeLogo"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/imageNikeLogo" />
 
     <TextView
         android:id="@+id/textRecommendation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:text="Recommandation"
         android:textColor="@color/blue"
         android:textSize="20sp"
-        app:layout_constraintStart_toStartOf="parent"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/divider"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/divider" />
 
     <TextView
         android:id="@+id/textDiscount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="-10%"
         android:textColor="@android:color/black"
         android:textSize="24sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/textRecommendation"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="8dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textRecommendation" />
+
+    <TextView
+        android:id="@+id/textRate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
+        android:text="Évalue cette offre :"
+        android:textColor="@color/black"
+        android:textSize="15sp"
+        app:layout_constraintBottom_toTopOf="@id/ratingBar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textDiscount" />
 
     <!-- RatingBar pour Ã©valuer la marque -->
     <RatingBar
         android:id="@+id/ratingBar"
+        style="@style/CustomRatingBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:numStars="5"
-        android:rating="0"
+        android:layout_marginTop="20dp"
+        android:rating="2"
         android:stepSize="1"
-        app:layout_constraintTop_toBottomOf="@id/textDiscount"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textRate" />
 
     <TextView
         android:id="@+id/textDescription"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:gravity="center_horizontal"
         android:text="@string/Desc"
         android:textColor="@color/black"
         android:textSize="15sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/ratingBar"
-        android:layout_marginTop="16dp"
         app:layout_constraintHorizontal_bias="0.5"
-        android:gravity="center_horizontal"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ratingBar" />
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cardPromoCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        app:cardCornerRadius="8dp"
-        app:cardElevation="4dp"
-        app:layout_constraintStart_toStartOf="parent"
+        app:cardCornerRadius="6dp"
+        app:cardElevation="6dp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textDescription">
 
         <TextView
             android:id="@+id/textPromoCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/cuisse_nymphe_emue"
             android:padding="8dp"
-            android:text="Votre code promo : RANIALAZREG2907"
+            android:text="BOREDEALS-TK24EZKD89QLZNDLQJ"
             android:textColor="@color/black"
-            android:textSize="16sp"/>
+            android:textSize="16sp" />
+
 
     </androidx.cardview.widget.CardView>
 
+
     <TextView
         android:id="@+id/usageUnique"
-        android:layout_width="wrap_content"
+        android:layout_width="290dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="5dp"
+        android:gravity="center_horizontal"
         android:text="@string/usage_unique"
         android:textColor="@color/gray"
         android:textSize="12sp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/cardPromoCode"
-        android:layout_marginTop="5dp"
         app:layout_constraintHorizontal_bias="0.5"
-        android:gravity="center_horizontal"/>
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cardPromoCode" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardCopier"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/usageUnique">
+
+        <TextView
+            android:id="@+id/textCopier"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/blue"
+            android:fontFamily="@font/rubik"
+            android:padding="8dp"
+            android:text="Copier et utiliser le code promo"
+            android:textColor="@color/white"
+            android:textSize="16sp" />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
