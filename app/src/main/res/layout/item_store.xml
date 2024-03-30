@@ -53,20 +53,17 @@
                 android:backgroundTint="@color/black"/>
 
             <ImageButton
-                android:id="@+id/notifyBell"
-                android:layout_width="25dp"
-                android:layout_height="25dp"
+                android:id="@+id/addToFav"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:background="@android:color/transparent"
-                android:contentDescription="Notify"
+                android:contentDescription="Favorite"
                 android:scaleType="centerCrop"
-                android:src="@drawable/bell"
+                android:src="@drawable/ic_heart_fill"
                 android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"/>
+                android:layout_marginTop="10dp"/>
 
         </LinearLayout>
-
-
-
 
 
     </LinearLayout>

@@ -18,10 +18,10 @@
         app:layout_constraintEnd_toEndOf="parent">
 
         <ImageView
-            android:id="@+id/bell"
+            android:id="@+id/openFav"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/bell"
+            android:src="@drawable/ic_heart_fill"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginStart="16dp"

@@ -1,7 +1,5 @@
 package filrouge.groupei.boredealsappandroid;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -9,11 +7,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
-import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -29,13 +24,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
-import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -115,8 +106,8 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Pour l'animation
-        ImageView bellImageView = findViewById(R.id.bell);
-        Animation rotateAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate_bell);
+        ImageView bellImageView = findViewById(R.id.openFav);
+        Animation rotateAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_beat);
 
         Handler handler = new Handler();
         Runnable animationRunnable = new Runnable() {
