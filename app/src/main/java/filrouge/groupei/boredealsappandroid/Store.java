@@ -22,23 +22,7 @@ public class Store extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.item_store);
-
-            imageButton = findViewById(R.id.notifyBell);
-
-            mediaPlayer = MediaPlayer.create(this, R.raw.bell_sound);
-
-            imageButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // Lecture du son lorsque le bouton est cliqué
-                    mediaPlayer.start();
-                }
-            });
         }
-
-
-
-
 
         public Store(String name, String description, int discountPercentage) {
             this.name = name;
