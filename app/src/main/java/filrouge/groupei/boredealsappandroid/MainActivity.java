@@ -27,6 +27,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageButton;
+import androidx.appcompat.app.AppCompatActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     Firebase firestore;
@@ -34,12 +40,13 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private StoreAdapter storeAdapter;
     private List<Store> storeList;
+    private ImageButton imageButton;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -100,7 +107,21 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+
+
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        // Libération des ressources du MediaPlayer lors de la fermeture de l'activité
+        if (mediaPlayer != null) {
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
+    }
+
 
     private int parsePercentage(String percentageString) {
         return Integer.parseInt(percentageString.replace("%", ""));
@@ -123,4 +144,7 @@ public class MainActivity extends AppCompatActivity {
 
         return stores;
     }
+
+
+
 }
