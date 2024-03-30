@@ -99,23 +99,79 @@ public class CodeActivity extends AppCompatActivity {
             }
         });
 
+        TextView textPromoCode = findViewById(R.id.textPromoCode);
         TextView textCopier = findViewById(R.id.textCopier);
 
-        // Ajoutez un OnClickListener au TextView "Code Promo"
+        // Écouteur d'événements de clic pour textCopier
         textCopier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obtenez le texte du TextView
-                String promoCode = textCopier.getText().toString();
+                // Obtenir le texte de textPromoCode
+                String codePromo = textPromoCode.getText().toString();
 
-                // Copiez le texte dans le presse-papiers
+                // Copier le texte dans le presse-papiers
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("Code Promo", promoCode);
+                ClipData clipData = ClipData.newPlainText("Code promo", codePromo);
                 clipboardManager.setPrimaryClip(clipData);
 
-                // Affichez un message de succès
-                Toast.makeText(CodeActivity.this, "Code Promo copié dans le presse-papiers", Toast.LENGTH_SHORT).show();
+                // Afficher un message de confirmation
+                Toast.makeText(CodeActivity.this, "Code promo copié dans le presse-papiers", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        // Animation pour le cardPromoCode
+        animateCard(cardPromoCode);
+
+        // Écouteur d'événements de clic pour textCopier
+        textCopier.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Animation pour faire éclater le textCopier
+                explodeText(textCopier);
+
+                // Obtenir le texte de textPromoCode
+                String codePromo = textPromoCode.getText().toString();
+
+                // Copier le texte dans le presse-papiers
+                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+                ClipData clipData = ClipData.newPlainText("Code promo", codePromo);
+                clipboardManager.setPrimaryClip(clipData);
+
+                // Afficher un message de confirmation
+                Toast.makeText(CodeActivity.this, "Code promo copié dans le presse-papiers", Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+    private void animateCard(CardView cardView) {
+        // Animation pour animer l'échelle du cardView
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(cardView, View.SCALE_X, 0.8f, 1.0f);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(cardView, View.SCALE_Y, 0.8f, 1.0f);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
+        animatorSet.setDuration(500);
+        animatorSet.start();
+    }
+
+    private void explodeText(TextView textView) {
+        // Animation pour faire éclater le texte
+        ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(textView, View.SCALE_X, 1.0f, 1.5f);
+        ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(textView, View.SCALE_Y, 1.0f, 1.5f);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
+        animatorSet.setDuration(600);
+        animatorSet.addListener(new AnimatorListenerAdapter() {
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                super.onAnimationEnd(animation);
+                // Rétablir l'état initial du TextView après l'animation
+                textView.setScaleX(1.0f);
+                textView.setScaleY(1.0f);
+            }
+        });
+        animatorSet.start();
+    }
 }
+
