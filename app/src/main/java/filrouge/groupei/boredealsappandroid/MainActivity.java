@@ -1,19 +1,16 @@
 package filrouge.groupei.boredealsappandroid;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
@@ -29,15 +26,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Random;
 
 import android.media.MediaPlayer;
-import android.os.Bundle;
-import android.view.View;
 import android.widget.ImageButton;
-import androidx.appcompat.app.AppCompatActivity;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements NotificationClickListener {
 
     Firebase firestore;
 
@@ -48,6 +41,8 @@ public class MainActivity extends AppCompatActivity {
     private MediaPlayer mediaPlayer;
 
     private static final int ANIMATION_INTERVAL = 3000;
+
+    NotificationData notificationData = new NotificationData("Votre message de notification ici.");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +76,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
 
         storeList = generateSampleData();
-        storeAdapter = new StoreAdapter(storeList);
+        storeAdapter = new StoreAdapter(storeList, this);
         recyclerView.setAdapter(storeAdapter);
 
 
@@ -114,9 +109,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        // Pour l'animation
-        ImageView bellImageView = findViewById(R.id.bell);
+        ImageView bellImageView = findViewById(R.id.bellActivity);
         Animation rotateAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate_bell);
+
+        bellImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, NotifActivity.class);
+                intent.putExtra("notificationData", notificationData);
+                startActivity(intent);
+            }
+        });
+
 
         Handler handler = new Handler();
         Runnable animationRunnable = new Runnable() {
@@ -128,7 +132,6 @@ public class MainActivity extends AppCompatActivity {
         };
 
         handler.postDelayed(animationRunnable, ANIMATION_INTERVAL);
-
     }
 
     @Override
@@ -158,12 +161,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         for (int i = 0; i < names.length; i++) {
-            stores.add(new Store(names[i], descriptions[i], parsePercentage(percentages[i])));
+            stores.add(new Store(names[i], descriptions[i], parsePercentage(percentages[i]), notificationData));
         }
 
         return stores;
     }
 
+    @Override
+    public void onNotifyBellClick(NotificationData notificationData) {
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.putExtra("notificationData", notificationData);
+        startActivity(intent);
+    }
 
 
 }
