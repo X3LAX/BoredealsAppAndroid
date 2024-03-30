@@ -8,9 +8,13 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private StoreAdapter storeAdapter;
     private List<Store> storeList;
+
+    private static final int ANIMATION_INTERVAL = 3000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -100,6 +106,22 @@ public class MainActivity extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+        // Pour l'animation
+        ImageView bellImageView = findViewById(R.id.bell);
+        Animation rotateAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.rotate_bell);
+
+        Handler handler = new Handler();
+        Runnable animationRunnable = new Runnable() {
+            @Override
+            public void run() {
+                bellImageView.startAnimation(rotateAnimation);
+                handler.postDelayed(this, ANIMATION_INTERVAL);
+            }
+        };
+
+        handler.postDelayed(animationRunnable, ANIMATION_INTERVAL);
+
     }
 
     private int parsePercentage(String percentageString) {
