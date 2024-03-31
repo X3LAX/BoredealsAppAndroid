@@ -28,19 +28,14 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
         holder.buttonJEnProfite.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obtenez la position de l'article sélectionné
                 int itemPosition = holder.getAdapterPosition();
 
-                // Obtenez le magasin sélectionné
                 Store selectedStore = storeList.get(itemPosition);
 
-                // Créez un intent pour ouvrir l'activité CodeActivity
                 Intent intent = new Intent(v.getContext(), CodeActivity.class);
 
-                // Ajoutez les informations sur le magasin à l'intent
                 intent.putExtra("selectedStore", selectedStore);
 
-                // Démarrez l'activité CodeActivity
                 v.getContext().startActivity(intent);
             }
         });

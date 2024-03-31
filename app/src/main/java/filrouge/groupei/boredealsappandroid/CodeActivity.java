@@ -28,6 +28,9 @@ public class CodeActivity extends AppCompatActivity {
         TextView textRecommendation = findViewById(R.id.textRecommendation);
         textRecommendation.setText(store.getName());
 
+        TextView textDiscount = findViewById(R.id.textDiscount);
+        textDiscount.setText(store.getDescription());
+
         RatingBar ratingBar = findViewById(R.id.ratingBar);
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
