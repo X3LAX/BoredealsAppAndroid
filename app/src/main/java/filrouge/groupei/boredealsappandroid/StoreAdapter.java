@@ -1,5 +1,6 @@
 package filrouge.groupei.boredealsappandroid;
 
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +25,25 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull StoreViewHolder holder, int position) {
         holder.bind(storeList.get(position));
+        holder.buttonJEnProfite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Obtenez la position de l'article sélectionné
+                int itemPosition = holder.getAdapterPosition();
+
+                // Obtenez le magasin sélectionné
+                Store selectedStore = storeList.get(itemPosition);
+
+                // Créez un intent pour ouvrir l'activité CodeActivity
+                Intent intent = new Intent(v.getContext(), CodeActivity.class);
+
+                // Ajoutez les informations sur le magasin à l'intent
+                intent.putExtra("selectedStore", selectedStore);
+
+                // Démarrez l'activité CodeActivity
+                v.getContext().startActivity(intent);
+            }
+        });
     }
 
     @Override

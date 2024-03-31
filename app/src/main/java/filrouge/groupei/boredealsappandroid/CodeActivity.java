@@ -23,6 +23,11 @@ public class CodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
 
+        Store store = getIntent().getParcelableExtra("selectedStore");
+
+        TextView textRecommendation = findViewById(R.id.textRecommendation);
+        textRecommendation.setText(store.getName());
+
         RatingBar ratingBar = findViewById(R.id.ratingBar);
 
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {

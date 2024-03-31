@@ -1,45 +1,60 @@
 package filrouge.groupei.boredealsappandroid;
 
-import android.media.MediaPlayer;
-import android.widget.ImageButton;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import androidx.appcompat.app.AppCompatActivity;
+public class Store implements Parcelable {
+    private String name;
+    private String description;
+    private int discountPercentage;
 
-import android.os.Bundle;
-import android.view.View;
-import android.widget.ImageButton;
-import androidx.appcompat.app.AppCompatActivity;
+    public Store(String name, String description, int discountPercentage) {
+        this.name = name;
+        this.description = description;
+        this.discountPercentage = discountPercentage;
+    }
 
+    protected Store(Parcel in) {
+        name = in.readString();
+        description = in.readString();
+        discountPercentage = in.readInt();
+    }
 
-public class Store extends AppCompatActivity {
-        private String name;
-        private String description;
-        private int discountPercentage;
-        private ImageButton imageButton;
-        private MediaPlayer mediaPlayer;
+    public static final Creator<Store> CREATOR = new Creator<Store>() {
+        @Override
+        public Store createFromParcel(Parcel in) {
+            return new Store(in);
+        }
 
         @Override
-        protected void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            setContentView(R.layout.item_store);
+        public Store[] newArray(int size) {
+            return new Store[size];
         }
+    };
 
-        public Store(String name, String description, int discountPercentage) {
-            this.name = name;
-            this.description = description;
-            this.discountPercentage = discountPercentage;
-        }
+    public String getName() {
+        return name;
+    }
 
-        public String getName() {
-            return name;
-        }
+    public String getDescription() {
+        return description;
+    }
 
-        public String getDescription() {
-            return description;
-        }
+    public int getDiscountPercentage() {
+        return discountPercentage;
+    }
 
-        public int getDiscountPercentage() {
-            return discountPercentage;
-        }
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(name);
+        dest.writeString(description);
+        dest.writeInt(discountPercentage);
+    }
 }
+
 

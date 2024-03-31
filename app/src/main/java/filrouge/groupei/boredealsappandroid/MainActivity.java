@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.animation.Animation;
@@ -40,10 +41,16 @@ public class MainActivity extends AppCompatActivity {
 
     private static final int ANIMATION_INTERVAL = 3000;
 
+    private static Context appContext;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        appContext = getApplicationContext();
+
 
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -155,6 +162,8 @@ public class MainActivity extends AppCompatActivity {
         return stores;
     }
 
-
+    public static Context getAppContext() {
+        return appContext;
+    }
 
 }
