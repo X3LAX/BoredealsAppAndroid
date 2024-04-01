@@ -1,6 +1,5 @@
 package filrouge.groupei.boredealsappandroid;
 
-// StoreViewHolder.java
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -10,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 public class StoreViewHolder extends RecyclerView.ViewHolder {
     private TextView nameTextView;
     private TextView descriptionTextView;
-    public Button buttonJEnProfite; // Ajoutez cette ligne
+    public Button buttonJEnProfite;
 
     public StoreViewHolder(@NonNull View itemView) {
         super(itemView);

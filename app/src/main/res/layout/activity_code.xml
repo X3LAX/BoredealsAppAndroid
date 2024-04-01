@@ -8,12 +8,11 @@
     tools:context=".CodeActivity">
 
     <ImageView
-        android:id="@+id/imageNikeLogo"
+        android:id="@+id/imageLogo"
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/logonike"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -32,8 +31,8 @@
         android:fontFamily="@font/mclaren"
         android:text="Partager avec un ami"
         android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/imageNikeLogo"
-        app:layout_constraintTop_toTopOf="@id/imageNikeLogo" />
+        app:layout_constraintStart_toEndOf="@id/imageLogo"
+        app:layout_constraintTop_toTopOf="@id/imageLogo" />
 
     <ImageView
         android:id="@+id/imageShare"
@@ -53,7 +52,7 @@
         android:background="@android:color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imageNikeLogo" />
+        app:layout_constraintTop_toBottomOf="@id/imageLogo" />
 
     <TextView
         android:id="@+id/textRecommendation"

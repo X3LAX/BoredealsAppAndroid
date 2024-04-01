@@ -3,15 +3,15 @@
     <string name="Desc">Saisis ce code dans le champ réservé au code promotionnel lors de la commande afin de bénéficier de 10% pour les étudiants !</string>
     <string name="usage_unique">Ceci est un code personnel à usage multiple. Utilise-le chaque fois que tu fais tes achats chez NIKE</string>
     <string-array name="characters">
-        <item>HP</item>
-        <item>SAMSUNG</item>
-        <item>NIKE</item>
+        <item>GUCCI</item>
+        <item>PRADA</item>
+        <item>HERMES</item>
         <item>DIESEL</item>
         <item>APPLE</item>
         <item>LV</item>
-        <item>HERMES</item>
-        <item>CHANNEL</item>
-        <item>GUCCI</item>
+        <item>HP</item>
+        <item>SAMSUNG</item>
+        <item>NIKE</item>
     </string-array>
 
     <string-array name="description">

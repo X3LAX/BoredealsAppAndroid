@@ -39,7 +39,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton imageButton;
     private MediaPlayer mediaPlayer;
 
-    private static final int ANIMATION_INTERVAL = 3000;
+    private static final int ANIMATION_INTERVAL = 5000;
 
     private static Context appContext;
 

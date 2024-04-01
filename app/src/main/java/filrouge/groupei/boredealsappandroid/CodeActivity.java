@@ -8,7 +8,9 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -23,6 +25,7 @@ public class CodeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
 
+        // Utilisation de la classe store parcelée pour afficher les informations dans l'activité CodeActivity
         Store store = getIntent().getParcelableExtra("selectedStore");
 
         TextView textRecommendation = findViewById(R.id.textRecommendation);
@@ -30,6 +33,16 @@ public class CodeActivity extends AppCompatActivity {
 
         TextView textDiscount = findViewById(R.id.textDiscount);
         textDiscount.setText(store.getDescription());
+
+        int logoResourceId = getResources().getIdentifier(store.getName().toLowerCase() + "_logo", "drawable", getPackageName());
+
+        if (logoResourceId != 0) {
+            ImageView imageLogo = findViewById(R.id.imageLogo);
+            imageLogo.setImageResource(logoResourceId);
+        } else {
+            Log.e("CodeActivity", "Logo introuvable pour le magasin : " + store.getName());
+        }
+
 
         RatingBar ratingBar = findViewById(R.id.ratingBar);
 

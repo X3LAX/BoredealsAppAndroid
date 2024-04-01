@@ -3,6 +3,8 @@ package filrouge.groupei.boredealsappandroid;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.security.AccessController;
+
 public class Store implements Parcelable {
     private String name;
     private String description;
@@ -43,6 +45,12 @@ public class Store implements Parcelable {
     public int getDiscountPercentage() {
         return discountPercentage;
     }
+
+//    public int getLogoResourceId() {
+//        String resourceName = name.toLowerCase().replace(" ", "_");
+//
+//        return App.getContext().getResources().getIdentifier(resourceName, "drawable", App.getContext().getPackageName());
+//    }
 
     @Override
     public int describeContents() {
