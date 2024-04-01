@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">BoredealsAppAndroid</string>
-    <string name="Desc">Saisis ce code dans le champ réservé au code promotionnel lors de la commande afin de bénéficier de 10% pour les étudiants !</string>
-    <string name="usage_unique">Ceci est un code personnel à usage multiple. Utilise-le chaque fois que tu fais tes achats chez NIKE</string>
+    <string name="Desc">Saisis ce code dans le champ réservé au code promotionnel lors de la commande afin de bénéficier de la réduction !</string>
+    <string name="usage_unique">Ceci est un code personnel à usage multiple. Utilise-le chaque fois que tu fais tes achats.</string>
     <string-array name="characters">
         <item>GUCCI</item>
         <item>PRADA</item>
