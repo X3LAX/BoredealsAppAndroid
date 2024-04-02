@@ -37,4 +37,16 @@
         <item>80%</item>
         <item>90%</item>
     </string-array>
+
+    <string-array name="store_link">
+        <item>www.gucci.com</item>
+        <item>www.prada.com</item>
+        <item>www.hermes.com</item>
+        <item>fr.diesel.com</item>
+        <item>www.apple.com</item>
+        <item>fr.louisvuitton.com</item>
+        <item>www.hp.com</item>
+        <item>www.samsung.com</item>
+        <item>www.nike.com</item>
+    </string-array>
 </resources>

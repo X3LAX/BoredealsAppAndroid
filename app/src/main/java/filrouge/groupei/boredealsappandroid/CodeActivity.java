@@ -4,14 +4,19 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.animation.AnimatorSet;
 import android.animation.ObjectAnimator;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -22,6 +27,12 @@ import androidx.cardview.widget.CardView;
 
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
+
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.WriterException;
+import com.google.zxing.common.BitMatrix;
+import com.google.zxing.qrcode.QRCodeWriter;
+
 
 public class CodeActivity extends AppCompatActivity {
 
@@ -38,6 +49,9 @@ public class CodeActivity extends AppCompatActivity {
 
         TextView textDiscount = findViewById(R.id.textDiscount);
         textDiscount.setText(store.getDescription());
+
+        String websiteLink = store.getWebsiteLink();
+        Bitmap qrCodeBitmap = generateQRCode(websiteLink, 500, 500);
 
         //String logoUrl = "https://github.com/X3LAX/BoredealsAppAndroidRessources/blob/main/logos/apple_logo.png?raw=true";//+ store.getName() + "_logo.png?raw=true";
 
@@ -188,6 +202,14 @@ public class CodeActivity extends AppCompatActivity {
                 Toast.makeText(CodeActivity.this, "Code promo copié dans le presse-papiers", Toast.LENGTH_SHORT).show();
             }
         });
+
+        Button buttonGenerateQRCode = findViewById(R.id.boutonQrCode);
+        buttonGenerateQRCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showQRCodeDialog(qrCodeBitmap);
+            }
+        });
     }
 
     private void animateCard(CardView cardView) {
@@ -220,5 +242,47 @@ public class CodeActivity extends AppCompatActivity {
         });
         animatorSet.start();
     }
+
+    private Bitmap generateQRCode(String text, int width, int height) {
+        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+        try {
+            BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, width, height);
+            Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.RGB_565);
+            for (int x = 0; x < width; x++) {
+                for (int y = 0; y < height; y++) {
+                    bitmap.setPixel(x, y, bitMatrix.get(x, y) ? Color.BLACK : Color.WHITE);
+                }
+            }
+            return bitmap;
+        } catch (WriterException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
+    private void showQRCodeDialog(Bitmap qrCodeBitmap) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        LayoutInflater inflater = getLayoutInflater();
+        View dialogView = inflater.inflate(R.layout.activity_qrcode, null);
+        builder.setView(dialogView);
+
+        ImageView imageViewQRCode = dialogView.findViewById(R.id.imageQRCode);
+        imageViewQRCode.setImageBitmap(qrCodeBitmap);
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        Button buttonClose = dialogView.findViewById(R.id.buttonClose);
+        buttonClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+    }
+
+
+
 }
 

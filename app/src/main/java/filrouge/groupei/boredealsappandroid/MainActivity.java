@@ -155,13 +155,14 @@ public class MainActivity extends AppCompatActivity {
         String[] names = getResources().getStringArray(R.array.characters);
         String[] descriptions = getResources().getStringArray(R.array.description);
         String[] percentages = getResources().getStringArray(R.array.discount_percentages);
+        String[] link = getResources().getStringArray(R.array.store_link);
 
         if (names.length != descriptions.length || names.length != percentages.length) {
             return stores;
         }
 
         for (int i = 0; i < names.length; i++) {
-            stores.add(new Store(names[i], descriptions[i], parsePercentage(percentages[i])));
+            stores.add(new Store(names[i], descriptions[i], parsePercentage(percentages[i]), link[i]));
         }
 
         return stores;

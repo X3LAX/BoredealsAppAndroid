@@ -136,7 +136,6 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-
     </androidx.cardview.widget.CardView>
 
 
