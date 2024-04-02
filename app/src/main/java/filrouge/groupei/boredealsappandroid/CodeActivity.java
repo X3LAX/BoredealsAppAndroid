@@ -44,6 +44,8 @@ public class CodeActivity extends AppCompatActivity {
         TextView textDiscount = findViewById(R.id.textDiscount);
         textDiscount.setText(store.getDescription());
 
+
+
         //String logoUrl = "https://github.com/X3LAX/BoredealsAppAndroidRessources/blob/main/logos/apple_logo.png?raw=true";//+ store.getName() + "_logo.png?raw=true";
 
         String baseUrl = "https://github.com/X3LAX/BoredealsAppAndroidRessources/blob/main/logos/";
@@ -152,7 +154,11 @@ public class CodeActivity extends AppCompatActivity {
         });
 
         TextView textPromoCode = findViewById(R.id.textPromoCode);
+        textPromoCode.setText(store.getPromocode());
         TextView textCopier = findViewById(R.id.textCopier);
+
+
+
 
         // Écouteur d'événements de clic pour textCopier
         textCopier.setOnClickListener(v -> {
