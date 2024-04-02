@@ -191,7 +191,7 @@
         app:layout_constraintTop_toBottomOf="@id/cardCopier" />
 
     <Button
-        android:id="@+id/buttonGenerateQR"
+        android:id="@+id/boutonQrCode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Générer un code QR"
