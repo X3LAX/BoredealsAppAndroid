@@ -7,6 +7,8 @@ import android.animation.ObjectAnimator;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,9 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 public class CodeActivity extends AppCompatActivity {
 
@@ -34,14 +39,35 @@ public class CodeActivity extends AppCompatActivity {
         TextView textDiscount = findViewById(R.id.textDiscount);
         textDiscount.setText(store.getDescription());
 
-        int logoResourceId = getResources().getIdentifier(store.getName().toLowerCase() + "_logo", "drawable", getPackageName());
+        //String logoUrl = "https://github.com/X3LAX/BoredealsAppAndroidRessources/blob/main/logos/apple_logo.png?raw=true";//+ store.getName() + "_logo.png?raw=true";
 
-        if (logoResourceId != 0) {
-            ImageView imageLogo = findViewById(R.id.imageLogo);
-            imageLogo.setImageResource(logoResourceId);
-        } else {
-            Log.e("CodeActivity", "Logo introuvable pour le magasin : " + store.getName());
-        }
+        String baseUrl = "https://github.com/X3LAX/BoredealsAppAndroidRessources/blob/main/logos/";
+        String logoUrl = baseUrl + store.getName().toLowerCase() + "_logo.png?raw=true";
+
+        Log.d("Store Name", store.getName());
+
+        ImageView imageLogo = findViewById(R.id.imageLogo);
+        Picasso.get()
+            .load(logoUrl)
+            .error(R.drawable.bell)
+            .into(new Target() {
+                @Override
+                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                    imageLogo.setImageBitmap(bitmap);
+                    Log.d("Picasso", "Image loaded successfully");
+                }
+
+                @Override
+                public void onBitmapFailed(Exception e, Drawable errorDrawable) {
+                    imageLogo.setImageDrawable(errorDrawable);
+                    Log.e("Picasso", "Error loading image", e);
+                }
+
+                @Override
+                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                    // You can do something here while the image is being loaded
+                }
+            });
 
 
         RatingBar ratingBar = findViewById(R.id.ratingBar);
