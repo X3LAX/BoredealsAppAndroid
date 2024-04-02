@@ -138,7 +138,6 @@
             android:layout_height="wrap_content"
             android:background="@color/cuisse_nymphe_emue"
             android:padding="8dp"
-            android:text="BOREDEALS-TK24EZKD89QLZNDLQJ"
             android:textColor="@color/black"
             android:textSize="16sp" />
 

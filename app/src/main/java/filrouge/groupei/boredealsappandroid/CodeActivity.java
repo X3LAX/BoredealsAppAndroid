@@ -7,8 +7,10 @@ import android.animation.ObjectAnimator;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +35,9 @@ public class CodeActivity extends AppCompatActivity {
         // Utilisation de la classe store parcelée pour afficher les informations dans l'activité CodeActivity
         Store store = getIntent().getParcelableExtra("selectedStore");
 
+        if (store == null) return;
+
+
         TextView textRecommendation = findViewById(R.id.textRecommendation);
         textRecommendation.setText(store.getName());
 
@@ -44,7 +49,7 @@ public class CodeActivity extends AppCompatActivity {
         String baseUrl = "https://github.com/X3LAX/BoredealsAppAndroidRessources/blob/main/logos/";
         String logoUrl = baseUrl + store.getName().toLowerCase() + "_logo.png?raw=true";
 
-        Log.d("Store Name", store.getName());
+        //Log.d("Store Name", store.getName());
 
         ImageView imageLogo = findViewById(R.id.imageLogo);
         Picasso.get()
@@ -150,44 +155,28 @@ public class CodeActivity extends AppCompatActivity {
         TextView textCopier = findViewById(R.id.textCopier);
 
         // Écouteur d'événements de clic pour textCopier
-        textCopier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Obtenir le texte de textPromoCode
-                String codePromo = textPromoCode.getText().toString();
+        textCopier.setOnClickListener(v -> {
+            // Copy the promocode to the clipboard
+            String codePromo = store.getPromocode();
+            ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+            ClipData clipData = ClipData.newPlainText("Promocode", codePromo);
+            clipboardManager.setPrimaryClip(clipData);
 
-                // Copier le texte dans le presse-papiers
-                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("Code promo", codePromo);
-                clipboardManager.setPrimaryClip(clipData);
+            // Confirm copying to the user
+            Toast.makeText(CodeActivity.this, "Code promo copié: " + codePromo, Toast.LENGTH_SHORT).show();
 
-                // Afficher un message de confirmation
-                Toast.makeText(CodeActivity.this, "Code promo copié dans le presse-papiers", Toast.LENGTH_SHORT).show();
-            }
+            // Open the store link in a web browser
+            String link = store.getLink();
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
+            startActivity(browserIntent);
         });
+
 
         // Animation pour le cardPromoCode
         animateCard(cardPromoCode);
 
         // Écouteur d'événements de clic pour textCopier
-        textCopier.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // Animation pour faire éclater le textCopier
-                explodeText(textCopier);
 
-                // Obtenir le texte de textPromoCode
-                String codePromo = textPromoCode.getText().toString();
-
-                // Copier le texte dans le presse-papiers
-                ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-                ClipData clipData = ClipData.newPlainText("Code promo", codePromo);
-                clipboardManager.setPrimaryClip(clipData);
-
-                // Afficher un message de confirmation
-                Toast.makeText(CodeActivity.this, "Code promo copié dans le presse-papiers", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     private void animateCard(CardView cardView) {
