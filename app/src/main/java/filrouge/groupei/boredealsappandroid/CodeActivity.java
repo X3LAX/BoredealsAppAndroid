@@ -163,6 +163,7 @@ public class CodeActivity extends AppCompatActivity {
         });
 
         TextView textPromoCode = findViewById(R.id.textPromoCode);
+        textPromoCode.setText(store.getPromocode());
         TextView textCopier = findViewById(R.id.textCopier);
 
         // Écouteur d'événements de clic pour textCopier
