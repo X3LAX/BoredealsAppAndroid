@@ -9,9 +9,11 @@ import android.app.Dialog;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -79,7 +81,6 @@ public class CodeActivity extends AppCompatActivity {
 
                 @Override
                 public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    // You can do something here while the image is being loaded
                 }
             });
 
@@ -95,67 +96,54 @@ public class CodeActivity extends AppCompatActivity {
 
         CardView cardPromoCode = findViewById(R.id.cardPromoCode);
 
-        // Définir l'échelle initiale
         float initialScale = 1f;
 
-        // Définir l'échelle après l'animation
         float finalScale = 1.6f;
 
-        // Créer un ObjectAnimator pour animer l'échelle en X
         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(
-                cardPromoCode, // Vue à animer
-                View.SCALE_X, // Propriété à animer
-                initialScale, // Échelle initiale
-                finalScale // Échelle finale
+                cardPromoCode,
+                View.SCALE_X,
+                initialScale,
+                finalScale
         );
 
-        // Créer un ObjectAnimator pour animer l'échelle en Y
         ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(
-                cardPromoCode, // Vue à animer
-                View.SCALE_Y, // Propriété à animer
-                initialScale, // Échelle initiale
-                finalScale // Échelle finale
+                cardPromoCode,
+                View.SCALE_Y,
+                initialScale,
+                finalScale
         );
 
-        // Combinez les deux animations dans un AnimatorSet
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
 
-        // Définir la durée de l'animation (en millisecondes)
         animatorSet.setDuration(300);
 
-        // Démarrer l'animation
         animatorSet.start();
 
-        // Après l'animation, réinitialisez la vue à son échelle d'origine
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                // Créer un ObjectAnimator pour réinitialiser l'échelle en X
                 ObjectAnimator scaleXResetAnimator = ObjectAnimator.ofFloat(
-                        cardPromoCode, // Vue à animer
-                        View.SCALE_X, // Propriété à animer
-                        finalScale, // Échelle finale
-                        initialScale // Échelle initiale
+                        cardPromoCode,
+                        View.SCALE_X,
+                        finalScale,
+                        initialScale
                 );
 
-                // Créer un ObjectAnimator pour réinitialiser l'échelle en Y
                 ObjectAnimator scaleYResetAnimator = ObjectAnimator.ofFloat(
-                        cardPromoCode, // Vue à animer
-                        View.SCALE_Y, // Propriété à animer
-                        finalScale, // Échelle finale
-                        initialScale // Échelle initiale
+                        cardPromoCode,
+                        View.SCALE_Y,
+                        finalScale,
+                        initialScale
                 );
 
-                // Combinez les deux animations de réinitialisation dans un AnimatorSet
                 AnimatorSet resetAnimatorSet = new AnimatorSet();
                 resetAnimatorSet.playTogether(scaleXResetAnimator, scaleYResetAnimator);
 
-                // Définir la durée de l'animation de réinitialisation (en millisecondes)
                 resetAnimatorSet.setDuration(150);
 
-                // Démarrer l'animation de réinitialisation après un court délai
-                resetAnimatorSet.setStartDelay(200); // Délai de 1000 millisecondes (1 seconde)
+                resetAnimatorSet.setStartDelay(200);
                 resetAnimatorSet.start();
             }
         });
@@ -163,43 +151,44 @@ public class CodeActivity extends AppCompatActivity {
         TextView textPromoCode = findViewById(R.id.textPromoCode);
         TextView textCopier = findViewById(R.id.textCopier);
 
-        // Écouteur d'événements de clic pour textCopier
         textCopier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Obtenir le texte de textPromoCode
                 String codePromo = textPromoCode.getText().toString();
 
-                // Copier le texte dans le presse-papiers
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clipData = ClipData.newPlainText("Code promo", codePromo);
                 clipboardManager.setPrimaryClip(clipData);
 
-                // Afficher un message de confirmation
                 Toast.makeText(CodeActivity.this, "Code promo copié dans le presse-papiers", Toast.LENGTH_SHORT).show();
             }
         });
 
-        // Animation pour le cardPromoCode
         animateCard(cardPromoCode);
 
-        // Écouteur d'événements de clic pour textCopier
         textCopier.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Animation pour faire éclater le textCopier
                 explodeText(textCopier);
 
-                // Obtenir le texte de textPromoCode
+                // Copier le code
                 String codePromo = textPromoCode.getText().toString();
 
-                // Copier le texte dans le presse-papiers
                 ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clipData = ClipData.newPlainText("Code promo", codePromo);
                 clipboardManager.setPrimaryClip(clipData);
 
-                // Afficher un message de confirmation
                 Toast.makeText(CodeActivity.this, "Code promo copié dans le presse-papiers", Toast.LENGTH_SHORT).show();
+
+                // Ouvrir le site du magasin
+                String websiteLink = store.getWebsiteLink();
+                Log.d("WebsiteLink", websiteLink);
+                Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(websiteLink));
+                if (intent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(intent);
+                } else {
+                    Toast.makeText(CodeActivity.this, "Aucune application pour ouvrir le lien", Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
