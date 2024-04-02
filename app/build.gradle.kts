@@ -38,6 +38,8 @@ dependencies {
     implementation("com.google.android.gms:play-services-tasks:18.1.0")
     implementation ("com.fasterxml.jackson.core:jackson-core:2.13.0")
     implementation ("com.fasterxml.jackson.core:jackson-databind:2.13.0")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-jackson:2.9.0")
     implementation("com.squareup.picasso:picasso:2.71828")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")

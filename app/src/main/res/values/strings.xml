@@ -2,39 +2,5 @@
     <string name="app_name">BoredealsAppAndroid</string>
     <string name="Desc">Saisis ce code dans le champ réservé au code promotionnel lors de la commande afin de bénéficier de la réduction !</string>
     <string name="usage_unique">Ceci est un code personnel à usage multiple. Utilise-le chaque fois que tu fais tes achats.</string>
-    <string-array name="characters">
-        <item>GUCCI</item>
-        <item>PRADA</item>
-        <item>HERMES</item>
-        <item>DIESEL</item>
-        <item>APPLE</item>
-        <item>LV</item>
-        <item>HP</item>
-        <item>SAMSUNG</item>
-        <item>NIKE</item>
-    </string-array>
 
-    <string-array name="description">
-        <item>Jusqu\'à -10%</item>
-        <item>Jusqu\'à -20%</item>
-        <item>Jusqu\'à -30%</item>
-        <item>Jusqu\'à -40%</item>
-        <item>Jusqu\'à -50%</item>
-        <item>Jusqu\'à -60%</item>
-        <item>Jusqu\'à -70%</item>
-        <item>Jusqu\'à -80%</item>
-        <item>Jusqu\'à -90%</item>
-    </string-array>
-
-    <string-array name="discount_percentages">
-        <item>10%</item>
-        <item>20%</item>
-        <item>30%</item>
-        <item>40%</item>
-        <item>50%</item>
-        <item>60%</item>
-        <item>70%</item>
-        <item>80%</item>
-        <item>90%</item>
-    </string-array>
 </resources>
