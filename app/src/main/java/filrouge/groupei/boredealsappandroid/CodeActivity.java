@@ -186,7 +186,13 @@ public class CodeActivity extends AppCompatActivity {
         // Animation pour le cardPromoCode
         animateCard(cardPromoCode);
 
-        // Écouteur d'événements de clic pour textCopier
+        Button buttonGenerateQRCode = findViewById(R.id.boutonQrCode);
+        buttonGenerateQRCode.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showQRCodeDialog(qrCodeBitmap);
+            }
+        });
 
     }
 
