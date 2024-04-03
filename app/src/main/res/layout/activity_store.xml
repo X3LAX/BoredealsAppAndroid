@@ -7,6 +7,7 @@
     android:backgroundTint="@color/lavender"
     app:cardCornerRadius="8dp">
 
+
     <!-- Contenu de l'offre -->
     <LinearLayout
         android:layout_width="match_parent"
@@ -39,7 +40,7 @@
             android:layout_height="0dp"
             android:layout_weight="1"/>
 
-        <!-- Boutons "J'en profite" et cloche -->
+        <!-- Bouton "J'en profite" -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
