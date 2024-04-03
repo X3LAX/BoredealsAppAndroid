@@ -94,7 +94,6 @@ public class CodeActivity extends AppCompatActivity {
 
                 @Override
                 public void onPrepareLoad(Drawable placeHolderDrawable) {
-                    // You can do something here while the image is being loaded
                 }
             });
 
@@ -112,67 +111,54 @@ public class CodeActivity extends AppCompatActivity {
 
         CardView cardPromoCode = findViewById(R.id.cardPromoCode);
 
-        // Définir l'échelle initiale
         float initialScale = 1f;
 
-        // Définir l'échelle après l'animation
         float finalScale = 1.6f;
 
-        // Créer un ObjectAnimator pour animer l'échelle en X
         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(
-                cardPromoCode, // Vue à animer
-                View.SCALE_X, // Propriété à animer
-                initialScale, // Échelle initiale
-                finalScale // Échelle finale
+                cardPromoCode,
+                View.SCALE_X,
+                initialScale,
+                finalScale
         );
 
-        // Créer un ObjectAnimator pour animer l'échelle en Y
         ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(
-                cardPromoCode, // Vue à animer
-                View.SCALE_Y, // Propriété à animer
-                initialScale, // Échelle initiale
-                finalScale // Échelle finale
+                cardPromoCode,
+                View.SCALE_Y,
+                initialScale,
+                finalScale
         );
 
-        // Combinez les deux animations dans un AnimatorSet
         AnimatorSet animatorSet = new AnimatorSet();
         animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
 
-        // Définir la durée de l'animation (en millisecondes)
         animatorSet.setDuration(300);
 
-        // Démarrer l'animation
         animatorSet.start();
 
-        // Après l'animation, réinitialisez la vue à son échelle d'origine
         animatorSet.addListener(new AnimatorListenerAdapter() {
             @Override
             public void onAnimationEnd(Animator animation) {
-                // Créer un ObjectAnimator pour réinitialiser l'échelle en X
                 ObjectAnimator scaleXResetAnimator = ObjectAnimator.ofFloat(
-                        cardPromoCode, // Vue à animer
-                        View.SCALE_X, // Propriété à animer
-                        finalScale, // Échelle finale
-                        initialScale // Échelle initiale
+                        cardPromoCode,
+                        View.SCALE_X,
+                        finalScale,
+                        initialScale
                 );
 
-                // Créer un ObjectAnimator pour réinitialiser l'échelle en Y
                 ObjectAnimator scaleYResetAnimator = ObjectAnimator.ofFloat(
-                        cardPromoCode, // Vue à animer
-                        View.SCALE_Y, // Propriété à animer
-                        finalScale, // Échelle finale
-                        initialScale // Échelle initiale
+                        cardPromoCode,
+                        View.SCALE_Y,
+                        finalScale,
+                        initialScale
                 );
 
-                // Combinez les deux animations de réinitialisation dans un AnimatorSet
                 AnimatorSet resetAnimatorSet = new AnimatorSet();
                 resetAnimatorSet.playTogether(scaleXResetAnimator, scaleYResetAnimator);
 
-                // Définir la durée de l'animation de réinitialisation (en millisecondes)
                 resetAnimatorSet.setDuration(300);
 
-                // Démarrer l'animation de réinitialisation après un court délai
-                resetAnimatorSet.setStartDelay(300); // Délai de 1000 millisecondes (1 seconde)
+                resetAnimatorSet.setStartDelay(300);
                 resetAnimatorSet.start();
             }
         });
@@ -181,25 +167,20 @@ public class CodeActivity extends AppCompatActivity {
         textPromoCode.setText(store.getPromocode());
         TextView textCopier = findViewById(R.id.textCopier);
 
-        // Écouteur d'événements de clic pour textCopier
         textCopier.setOnClickListener(v -> {
-            // Copy the promocode to the clipboard
             String codePromo = store.getPromocode();
             ClipboardManager clipboardManager = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
             ClipData clipData = ClipData.newPlainText("Promocode", codePromo);
             clipboardManager.setPrimaryClip(clipData);
 
-            // Confirm copying to the user
             Toast.makeText(CodeActivity.this, "Code promo copié: " + codePromo, Toast.LENGTH_SHORT).show();
 
-            // Open the store link in a web browser
             String link = store.getLink();
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(link));
             startActivity(browserIntent);
         });
 
 
-        // Animation pour le cardPromoCode
         animateCard(cardPromoCode);
 
         Button buttonGenerateQRCode = findViewById(R.id.boutonQrCode);
@@ -216,16 +197,12 @@ public class CodeActivity extends AppCompatActivity {
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                // Appel de la méthode pour enregistrer l'avis dans Firebase
                 saveRatingToFirebase(rating);
 
-                // Vérifie si la note a été changée par l'utilisateur
                 if (fromUser) {
-                    // Démarre l'animation pour le cœur
                     Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_animation);
                     ratingBar.startAnimation(anim);
 
-                    // Affiche un Toast pour indiquer que l'évaluation a été envoyée
                     Toast.makeText(getApplicationContext(), "Évaluation envoyée avec succès", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -233,9 +210,7 @@ public class CodeActivity extends AppCompatActivity {
     }
 
     private void saveRatingToFirebase(float rating) {
-        // Enregistrement de la note dans la base de données Firebase
         databaseReference.push().setValue(rating);
-        // Vous pouvez ajouter ici la gestion des succès/échecs si nécessaire
     }
 
 
@@ -263,7 +238,6 @@ public class CodeActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                // Rétablir l'état initial du TextView après l'animation
                 textView.setScaleX(1.0f);
                 textView.setScaleY(1.0f);
             }
