@@ -43,7 +43,7 @@ import com.squareup.picasso.Target;
 public class CodeActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
-    private String userId; // Assuming userId is available in your app
+    private String userId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,17 +96,13 @@ public class CodeActivity extends AppCompatActivity {
         Button buttonGenerateQRCode = findViewById(R.id.boutonQrCode);
         buttonGenerateQRCode.setOnClickListener(v -> showQRCodeDialog(qrCodeBitmap));
 
-        // Récupérer l'ID utilisateur (à adapter à votre logique)
-        userId = getUserId(); // Méthode à implémenter
+        userId = getUserId();
 
-        // Initialiser la référence de la base de données
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
-        // Récupérer et afficher la note sauvegardée localement
         float savedRating = getSavedRatingFromPreferences(String.valueOf(store.getId()));
         ratingBar.setRating(savedRating);
 
-        // Enregistrer la note lorsqu'elle change et afficher un message Toast
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
             saveRatingToFirebase(rating, String.valueOf(store.getId()));
             saveRatingLocally(rating, String.valueOf(store.getId()));
@@ -114,10 +110,8 @@ public class CodeActivity extends AppCompatActivity {
         });
     }
 
-    // Méthode pour récupérer l'ID utilisateur (à adapter à votre logique)
     private String getUserId() {
-        // Implémentez ici la logique pour récupérer l'ID utilisateur
-        return "user123"; // Exemple statique, remplacez-le par votre propre logique
+        return "user123";
     }
 
     private float getSavedRatingFromPreferences(String storeId) {
