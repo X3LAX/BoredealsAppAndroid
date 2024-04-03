@@ -9,6 +9,7 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -194,26 +195,54 @@ public class CodeActivity extends AppCompatActivity {
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ratings");
 
         // Ajout du Listener sur la RatingBar
+
+
+        // Utilisation de la classe store parcelée pour afficher les informations dans l'activité CodeActivity
+
+        // Utilisation de la classe store parcelée pour afficher les informations dans l'activité CodeActivity
+
+
+        if (store == null) return;
+
+        float savedRating = getSavedRatingFromPreferences();
+
+        ratingBar.setRating(savedRating);
+
+        // Ajouter un écouteur à la RatingBar
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                // Enregistrer la nouvelle note dans Firebase
                 saveRatingToFirebase(rating);
 
-                if (fromUser) {
-                    Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_animation);
-                    ratingBar.startAnimation(anim);
+                // Enregistrer la note localement dans les préférences partagées
+                saveRatingLocally(rating);
 
-                    Toast.makeText(getApplicationContext(), "Évaluation envoyée avec succès", Toast.LENGTH_SHORT).show();
-                }
+                // Afficher un message Toast pour indiquer que l'évaluation a été enregistrée
+                Toast.makeText(CodeActivity.this, "Évaluation enregistrée avec succès", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void saveRatingLocally(float rating) {
+        // Récupérer les préférences partagées
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        // Éditer les préférences partagées pour y mettre la nouvelle note
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat("rating", rating);
+        editor.apply();
     }
 
     private void saveRatingToFirebase(float rating) {
         databaseReference.push().setValue(rating);
     }
 
-
+    private float getSavedRatingFromPreferences() {
+        // Récupérer les préférences partagées
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        // Récupérer la dernière note enregistrée
+        return sharedPreferences.getFloat("rating", 0.0f);
+    }
 
     private void animateCard(CardView cardView) {
         // Animation pour animer l'échelle du cardView
@@ -262,7 +291,6 @@ public class CodeActivity extends AppCompatActivity {
         }
     }
 
-
     private void showQRCodeDialog(Bitmap qrCodeBitmap) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -284,4 +312,6 @@ public class CodeActivity extends AppCompatActivity {
         });
     }
 }
+
+
 
