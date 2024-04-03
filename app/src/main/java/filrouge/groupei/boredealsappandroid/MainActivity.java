@@ -21,6 +21,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -30,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private SeekBar seekBar;
     private TextView percentageTextView;
     private static final int ANIMATION_INTERVAL = 5000;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
         ImageView bellImageView = findViewById(R.id.openFav);
         Animation rotateAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_beat);
 
+
         Handler handler = new Handler();
         Runnable animationRunnable = new Runnable() {
             @Override
@@ -62,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
                 bellImageView.startAnimation(rotateAnimation);
                 handler.postDelayed(this, ANIMATION_INTERVAL);
             }
+
         };
 
         handler.postDelayed(animationRunnable, ANIMATION_INTERVAL);

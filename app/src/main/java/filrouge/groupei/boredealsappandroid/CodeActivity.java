@@ -17,6 +17,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RatingBar;
@@ -26,6 +28,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import com.google.firebase.database.DatabaseReference;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.WriterException;
 import com.google.zxing.common.BitMatrix;
@@ -33,7 +36,17 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import android.os.Bundle;
+import android.widget.RatingBar;
+import androidx.appcompat.app.AppCompatActivity;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+
 public class CodeActivity extends AppCompatActivity {
+
+    private RatingBar ratingBar;
+    private DatabaseReference databaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +108,8 @@ public class CodeActivity extends AppCompatActivity {
             }
         });
 
+
+
         CardView cardPromoCode = findViewById(R.id.cardPromoCode);
 
         // Définir l'échelle initiale
@@ -154,10 +169,10 @@ public class CodeActivity extends AppCompatActivity {
                 resetAnimatorSet.playTogether(scaleXResetAnimator, scaleYResetAnimator);
 
                 // Définir la durée de l'animation de réinitialisation (en millisecondes)
-                resetAnimatorSet.setDuration(150);
+                resetAnimatorSet.setDuration(300);
 
                 // Démarrer l'animation de réinitialisation après un court délai
-                resetAnimatorSet.setStartDelay(200); // Délai de 1000 millisecondes (1 seconde)
+                resetAnimatorSet.setStartDelay(300); // Délai de 1000 millisecondes (1 seconde)
                 resetAnimatorSet.start();
             }
         });
@@ -195,7 +210,35 @@ public class CodeActivity extends AppCompatActivity {
             }
         });
 
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("ratings");
+
+        // Ajout du Listener sur la RatingBar
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                // Appel de la méthode pour enregistrer l'avis dans Firebase
+                saveRatingToFirebase(rating);
+
+                // Vérifie si la note a été changée par l'utilisateur
+                if (fromUser) {
+                    // Démarre l'animation pour le cœur
+                    Animation anim = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.scale_animation);
+                    ratingBar.startAnimation(anim);
+
+                    // Affiche un Toast pour indiquer que l'évaluation a été envoyée
+                    Toast.makeText(getApplicationContext(), "Évaluation envoyée avec succès", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
+
+    private void saveRatingToFirebase(float rating) {
+        // Enregistrement de la note dans la base de données Firebase
+        databaseReference.push().setValue(rating);
+        // Vous pouvez ajouter ici la gestion des succès/échecs si nécessaire
+    }
+
+
 
     private void animateCard(CardView cardView) {
         // Animation pour animer l'échelle du cardView

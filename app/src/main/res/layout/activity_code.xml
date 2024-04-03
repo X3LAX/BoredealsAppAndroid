@@ -13,36 +13,11 @@
         android:layout_height="100dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <!-- Texte "Partager avec un ami" -->
-
-    <!-- Logo de partage -->
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <!-- Trait noir -->
-
-    <TextView
-        android:id="@+id/textShareWithFriend"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="56dp"
-        android:layout_marginTop="12dp"
-        android:fontFamily="@font/mclaren"
-        android:text="Partager avec un ami"
-        android:textSize="18sp"
-        app:layout_constraintStart_toEndOf="@id/imageLogo"
-        app:layout_constraintTop_toTopOf="@id/imageLogo" />
-
-    <ImageView
-        android:id="@+id/imageShare"
-        android:layout_width="26dp"
-        android:layout_height="33dp"
-        android:layout_marginStart="12dp"
-        android:src="@drawable/ts"
-        app:layout_constraintStart_toEndOf="@id/textShareWithFriend"
-        app:layout_constraintTop_toTopOf="@id/textShareWithFriend" />
-
 
     <View
         android:id="@+id/divider"
@@ -136,7 +111,7 @@
             android:id="@+id/textPromoCode"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/cuisse_nymphe_emue"
+            android:background="@color/white"
             android:padding="8dp"
             android:textColor="@color/black"
             android:textSize="16sp" />
@@ -201,6 +176,7 @@
         android:layout_height="wrap_content"
         android:text="Générer un code QR"
         android:fontFamily="@font/rubik"
+        android:backgroundTint="@color/cuisse_nymphe_emue"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textAccesSite"
