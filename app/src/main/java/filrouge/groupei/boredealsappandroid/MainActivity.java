@@ -15,6 +15,12 @@ import android.os.Bundle;
 import android.widget.SeekBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private StoreAdapter storeAdapter;
-
     private List<Store> allStores;
     private SeekBar seekBar;
     private TextView percentageTextView;
@@ -52,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize SeekBar and TextView
         seekBar = findViewById(R.id.seekBar);
         percentageTextView = findViewById(R.id.percentageTextView);
-
 
         fetchStores();
 
@@ -151,5 +155,9 @@ public class MainActivity extends AppCompatActivity {
             storeAdapter.setData(stores);
             storeAdapter.notifyDataSetChanged();
         }
+    }
+
+    private void fetchFavoriteStores(String uid) {
+        DatabaseReference favoriteStoresRef = FirebaseDatabase.getInstance().getReference("favorite_stores").child(uid);
     }
 }

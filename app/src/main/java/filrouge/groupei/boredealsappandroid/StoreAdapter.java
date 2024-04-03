@@ -47,9 +47,13 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
                 if (store.isFavourite()) {
                     holder.addToFav.setImageResource(R.drawable.ic_heart_empty);
                     store.setFavourite(false);
+                    FirebaseUtils firebaseUtils = new FirebaseUtils();
+                    firebaseUtils.removeStoreFromFavorites(String.valueOf(store.getId()));
                 } else {
                     holder.addToFav.setImageResource(R.drawable.ic_heart_fill);
                     store.setFavourite(true);
+                    FirebaseUtils firebaseUtils = new FirebaseUtils();
+                    firebaseUtils.addStoreToFavorites(String.valueOf(store.getId()));
                 }
             }
         });
