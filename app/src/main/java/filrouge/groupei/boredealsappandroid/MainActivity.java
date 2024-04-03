@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -18,8 +19,11 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -49,21 +53,17 @@ public class MainActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2, RecyclerView.VERTICAL, false));
 
-
-        // Initialize the adapter with an empty list
         storeAdapter = new StoreAdapter(new ArrayList<>());
         recyclerView.setAdapter(storeAdapter);
 
-        // Initialize SeekBar and TextView
         seekBar = findViewById(R.id.seekBar);
         percentageTextView = findViewById(R.id.percentageTextView);
 
-        fetchStores();
+        fetchAllStores();
 
         // Pour l'animation
         ImageView bellImageView = findViewById(R.id.openFav);
         Animation rotateAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_beat);
-
 
         Handler handler = new Handler();
         Runnable animationRunnable = new Runnable() {
@@ -74,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             }
 
         };
-
         handler.postDelayed(animationRunnable, ANIMATION_INTERVAL);
 
         findViewById(R.id.openFav).setOnClickListener(new View.OnClickListener() {
@@ -84,9 +83,14 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        if (currentUser != null) {
+            fetchFavoriteStores(currentUser.getUid());
+        }
     }
 
-    private void fetchStores() {
+    private void fetchAllStores() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://raw.githubusercontent.com/X3LAX/")
                 .addConverterFactory(JacksonConverterFactory.create())
@@ -99,9 +103,8 @@ public class MainActivity extends AppCompatActivity {
             public void onResponse(@NonNull Call<List<Store>> call, @NonNull Response<List<Store>> response) {
                 if (response.isSuccessful() && response.body() != null) {
                     allStores = response.body();
-                    storeAdapter.setData(allStores);
+                    updateUI(allStores);
 
-                    // After fetching the stores, set up the SeekBar based on the maximum discount percentage
                     int maxDiscount = allStores.stream().mapToInt(Store::getDiscountPercentage).max().orElse(100);
                     setupSeekBar(maxDiscount);
                 } else {
@@ -117,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setupSeekBar(int maxDiscount) {
-        // Assuming the discount percentages are in increments of 5
         seekBar.setMax(maxDiscount / 5);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -136,28 +138,49 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
-                // Optional: Implement if needed
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
-                // Optional: Implement if needed
             }
         });
     }
 
-
     private void updateUI(List<Store> stores) {
-        if (storeAdapter == null) {
-            storeAdapter = new StoreAdapter(stores);
-            recyclerView.setAdapter(storeAdapter);
-        } else {
-            storeAdapter.setData(stores);
-            storeAdapter.notifyDataSetChanged();
-        }
+        storeAdapter.setData(stores);
+        storeAdapter.notifyDataSetChanged();
     }
 
     private void fetchFavoriteStores(String uid) {
-        DatabaseReference favoriteStoresRef = FirebaseDatabase.getInstance().getReference("favorite_stores").child(uid);
+        DatabaseReference favoriteStoresRef = FirebaseDatabase.getInstance().getReference().child("favorite_stores").child(uid);
+        favoriteStoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                List<Integer> favoriteStoreIds = new ArrayList<>();
+                for (DataSnapshot storeSnapshot : dataSnapshot.getChildren()) {
+                    String storeId = storeSnapshot.getKey();
+                    if (storeId != null) {
+                        favoriteStoreIds.add(Integer.parseInt(storeId));
+                    }
+                }
+                updateUIWithFavoriteStores(favoriteStoreIds);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.e("MainActivity", "Error fetching favorite stores: " + databaseError.getMessage());
+            }
+        });
+    }
+
+    private void updateUIWithFavoriteStores(List<Integer> favoriteStoreIds) {
+        List<Store> favoriteStores = new ArrayList<>();
+        for (Store store : allStores) {
+            if (favoriteStoreIds.contains(store.getId())) {
+                store.setFavourite(true);
+            }
+            favoriteStores.add(store);
+        }
+        updateUI(favoriteStores);
     }
 }

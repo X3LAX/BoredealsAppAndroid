@@ -57,6 +57,7 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
                 }
             }
         });
+
     }
 
     @Override
