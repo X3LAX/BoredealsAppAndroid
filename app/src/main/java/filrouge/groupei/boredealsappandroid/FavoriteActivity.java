@@ -68,6 +68,10 @@ public class FavoriteActivity extends AppCompatActivity {
                             .collect(Collectors.toList());
                     storeAdapter.setData(favoriteStores);
 
+                    for (Store store : favoriteStores) {
+                        store.setFavourite(true);
+                    }
+
 
                 } else {
                     Toast.makeText(FavoriteActivity.this, "Failed to fetch stores.", Toast.LENGTH_SHORT).show();
