@@ -17,7 +17,6 @@ public class Store implements Parcelable {
     public Store() {
     }
 
-    // Constructor used for parcel
     public Store(int id, String name, String description, String url, int discountPercentage, String promocode, boolean isFavourite) {
         this.id = id;
         this.name = name;
@@ -28,11 +27,10 @@ public class Store implements Parcelable {
         this.isFavourite = isFavourite;
     }
 
-    // Getters and setters (Ensure you have these for all fields)
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
 
-    @JsonProperty("name") // Maps JSON property name to this Java field
+    @JsonProperty("name")
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -79,8 +77,6 @@ public class Store implements Parcelable {
         dest.writeString(link);
     }
 
-    // Parcelable.Creator
-
     public static final Creator<Store> CREATOR = new Creator<Store>() {
         @Override
         public Store createFromParcel(Parcel in) {
@@ -93,7 +89,6 @@ public class Store implements Parcelable {
         }
     };
 
-    // Constructor used for Parcelable
     protected Store(Parcel in) {
         id = in.readInt();
         name = in.readString();
