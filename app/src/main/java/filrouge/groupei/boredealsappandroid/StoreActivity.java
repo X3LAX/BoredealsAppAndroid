@@ -11,6 +11,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,6 +22,8 @@ public class StoreActivity extends AppCompatActivity {
     private StoreAdapter storeAdapter;
     private List<Store> storeList = new ArrayList<>();
 
+//    private FirebaseFirestore db = FirebaseFirestore.getInstance();
+//    private CollectionReference storeRef = db.collection("stores");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

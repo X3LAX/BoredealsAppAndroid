@@ -12,20 +12,20 @@ public class Store implements Parcelable {
     private int discountPercentage;
     private String promocode;
     private String link;
+    private boolean isFavourite;
 
-    // Default constructor required for Jackson
     public Store() {
     }
 
     // Constructor used for parcel
-    public Store(int id, String name, String description, String url, int discountPercentage, String promocode) {
+    public Store(int id, String name, String description, String url, int discountPercentage, String promocode, boolean isFavourite) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.url = url;
         this.discountPercentage = discountPercentage;
         this.promocode = promocode;
-
+        this.isFavourite = isFavourite;
     }
 
     // Getters and setters (Ensure you have these for all fields)
@@ -56,7 +56,14 @@ public class Store implements Parcelable {
     public String getLink() { return link; }
     public void setLink(String link) { this.link = link; }
 
-    // Parcelable implementation methods
+
+    public boolean isFavourite() {
+        return isFavourite;
+    }
+
+    public void setFavourite(boolean favourite) {
+        isFavourite = favourite;
+    }
 
     @Override
     public int describeContents() { return 0; }
