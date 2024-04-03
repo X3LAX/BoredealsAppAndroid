@@ -60,7 +60,7 @@
                 android:contentDescription="Favorite"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_heart_fill"
-                android:layout_marginStart="20dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"/>
 
         </LinearLayout>
