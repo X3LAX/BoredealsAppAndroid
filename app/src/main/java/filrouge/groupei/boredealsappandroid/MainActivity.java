@@ -62,14 +62,14 @@ public class MainActivity extends AppCompatActivity {
         fetchAllStores();
 
         // Pour l'animation
-        ImageView bellImageView = findViewById(R.id.openFav);
-        Animation rotateAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_beat);
+        ImageView heart = findViewById(R.id.openFav);
+        Animation heartBeat = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_beat);
 
         Handler handler = new Handler();
         Runnable animationRunnable = new Runnable() {
             @Override
             public void run() {
-                bellImageView.startAnimation(rotateAnimation);
+                heart.startAnimation(heartBeat);
                 handler.postDelayed(this, ANIMATION_INTERVAL);
             }
 
