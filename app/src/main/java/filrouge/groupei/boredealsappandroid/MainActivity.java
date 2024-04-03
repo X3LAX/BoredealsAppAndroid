@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private List<Store> allStores;
     private SeekBar seekBar;
     private TextView percentageTextView;
-
+    private static final int ANIMATION_INTERVAL = 5000;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,20 @@ public class MainActivity extends AppCompatActivity {
 
         fetchStores();
 
+        // Pour l'animation
+        ImageView bellImageView = findViewById(R.id.openFav);
+        Animation rotateAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_beat);
+
+        Handler handler = new Handler();
+        Runnable animationRunnable = new Runnable() {
+            @Override
+            public void run() {
+                bellImageView.startAnimation(rotateAnimation);
+                handler.postDelayed(this, ANIMATION_INTERVAL);
+            }
+        };
+
+        handler.postDelayed(animationRunnable, ANIMATION_INTERVAL);
 
     }
 
