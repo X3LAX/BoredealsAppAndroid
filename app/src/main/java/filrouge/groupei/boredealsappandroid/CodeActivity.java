@@ -69,12 +69,10 @@ public class CodeActivity extends AppCompatActivity {
         String websiteLink = store.getLink();
         Bitmap qrCodeBitmap = generateQRCode(websiteLink, 500, 500);
 
-        //String logoUrl = "https://github.com/X3LAX/BoredealsAppAndroidRessources/blob/main/logos/apple_logo.png?raw=true";//+ store.getName() + "_logo.png?raw=true";
 
         String baseUrl = "https://github.com/X3LAX/BoredealsAppAndroidRessources/blob/main/logos/";
         String logoUrl = baseUrl + store.getName().toLowerCase() + "_logo.png?raw=true";
 
-        //Log.d("Store Name", store.getName());
 
         ImageView imageLogo = findViewById(R.id.imageLogo);
         Picasso.get()
@@ -194,12 +192,6 @@ public class CodeActivity extends AppCompatActivity {
 
         databaseReference = FirebaseDatabase.getInstance().getReference().child("ratings");
 
-        // Ajout du Listener sur la RatingBar
-
-
-        // Utilisation de la classe store parcelée pour afficher les informations dans l'activité CodeActivity
-
-        // Utilisation de la classe store parcelée pour afficher les informations dans l'activité CodeActivity
 
 
         if (store == null) return;
@@ -208,26 +200,20 @@ public class CodeActivity extends AppCompatActivity {
 
         ratingBar.setRating(savedRating);
 
-        // Ajouter un écouteur à la RatingBar
         ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                // Enregistrer la nouvelle note dans Firebase
                 saveRatingToFirebase(rating);
 
-                // Enregistrer la note localement dans les préférences partagées
                 saveRatingLocally(rating);
 
-                // Afficher un message Toast pour indiquer que l'évaluation a été enregistrée
                 Toast.makeText(CodeActivity.this, "Évaluation enregistrée avec succès", Toast.LENGTH_SHORT).show();
             }
         });
     }
 
     private void saveRatingLocally(float rating) {
-        // Récupérer les préférences partagées
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        // Éditer les préférences partagées pour y mettre la nouvelle note
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putFloat("rating", rating);
         editor.apply();
@@ -238,14 +224,11 @@ public class CodeActivity extends AppCompatActivity {
     }
 
     private float getSavedRatingFromPreferences() {
-        // Récupérer les préférences partagées
         SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        // Récupérer la dernière note enregistrée
         return sharedPreferences.getFloat("rating", 0.0f);
     }
 
     private void animateCard(CardView cardView) {
-        // Animation pour animer l'échelle du cardView
         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(cardView, View.SCALE_X, 0.8f, 1.0f);
         ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(cardView, View.SCALE_Y, 0.8f, 1.0f);
 
@@ -256,7 +239,6 @@ public class CodeActivity extends AppCompatActivity {
     }
 
     private void explodeText(TextView textView) {
-        // Animation pour faire éclater le texte
         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(textView, View.SCALE_X, 1.0f, 1.5f);
         ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(textView, View.SCALE_Y, 1.0f, 1.5f);
 
