@@ -25,6 +25,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
+import android.os.Handler;
 
 /**
  * Cette activité affiche la liste des magasins favoris de l'utilisateur.
@@ -34,6 +35,9 @@ public class FavoriteActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private StoreAdapter storeAdapter;
     private FirebaseUser currentUser;
+    private static final int REFRESH_INTERVAL = 1000; // Intervalle de rafraîchissement en millisecondes
+    private Handler handler;
+    private Runnable refreshRunnable;
 
     /**
      * Méthode appelée lors de la création de l'activité.
@@ -50,7 +54,19 @@ public class FavoriteActivity extends AppCompatActivity {
         storeAdapter = new StoreAdapter(new ArrayList<>());
         recyclerView.setAdapter(storeAdapter);
 
-        fetchFavoriteStoreIds();
+        handler = new Handler();
+
+        // Initialiser le runnable pour rafraîchir les données
+        refreshRunnable = new Runnable() {
+            @Override
+            public void run() {
+                // Rafraîchir les données ici
+                fetchFavoriteStoreIds();
+
+                // Exécuter à nouveau le runnable après l'intervalle spécifié
+                handler.postDelayed(this, REFRESH_INTERVAL);
+            }
+        };
     }
 
     /**
@@ -118,5 +134,18 @@ public class FavoriteActivity extends AppCompatActivity {
                 Toast.makeText(FavoriteActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
+    }
+    @Override
+    protected void onResume() {
+        super.onResume();
+        // Démarrer le rafraîchissement des données lorsque l'activité est en premier plan
+        handler.post(refreshRunnable);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        // Arrêter le rafraîchissement des données lorsque l'activité est en arrière-plan
+        handler.removeCallbacks(refreshRunnable);
     }
 }
