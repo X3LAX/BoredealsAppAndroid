@@ -17,15 +17,20 @@ import java.util.List;
 
 public class FavoriteActivity extends AppCompatActivity {
 
-    private RecyclerView favRecyclerView;
-    private StoreAdapter favoriteAdapter;
-    private List<Store> favoriteList = new ArrayList<>();
-//    private DatabaseReference favoriteRef;
+    private RecyclerView recyclerView;
+    private StoreAdapter storeAdapter;
+    private List<Store> favoriteStoreList = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fav);
+
+        recyclerView = findViewById(R.id.fav_recycler_view);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        storeAdapter = new StoreAdapter(favoriteStoreList);
+        recyclerView.setAdapter(storeAdapter);
 
 //        favRecyclerView = findViewById(R.id.fav_recycler_view);
 //        favRecyclerView.setLayoutManager(new LinearLayoutManager(this));
