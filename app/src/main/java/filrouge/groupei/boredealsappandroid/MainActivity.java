@@ -34,7 +34,9 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Activité principale de l'application.
+ */
 public class MainActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
@@ -90,6 +92,9 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Récupère la liste de tous les magasins depuis le serveur distant.
+     */
     private void fetchAllStores() {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl("https://raw.githubusercontent.com/X3LAX/")
@@ -119,6 +124,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Configure la barre de progression pour filtrer les magasins en fonction du pourcentage de réduction.
+     * @param maxDiscount Le pourcentage de réduction maximal parmi tous les magasins.
+     */
     private void setupSeekBar(int maxDiscount) {
         seekBar.setMax(maxDiscount / 5);
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -146,11 +155,19 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Met à jour l'interface utilisateur avec une liste de magasins.
+     * @param stores Liste des magasins à afficher.
+     */
     private void updateUI(List<Store> stores) {
         storeAdapter.setData(stores);
         storeAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * Récupère les magasins marqués comme favoris pour un utilisateur donné.
+     * @param uid L'ID de l'utilisateur.
+     */
     private void fetchFavoriteStores(String uid) {
         DatabaseReference favoriteStoresRef = FirebaseDatabase.getInstance().getReference().child("favorite_stores").child(uid);
         favoriteStoresRef.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -173,6 +190,10 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Met à jour l'interface utilisateur en marquant les magasins favoris.
+     * @param favoriteStoreIds Liste des identifiants des magasins favoris.
+     */
     private void updateUIWithFavoriteStores(List<Integer> favoriteStoreIds) {
         List<Store> favoriteStores = new ArrayList<>();
         for (Store store : allStores) {

@@ -15,19 +15,22 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+/**
+ * Activité de création de compte utilisateur.
+ */
 public class SignupActivity extends AppCompatActivity {
 
     EditText signupName, signupEmail, signupPassword;
     TextView loginRedirectText;
     Button signupButton;
-    FirebaseAuth mAuth; // Firebase Authentication reference
+    FirebaseAuth mAuth; // Référence d'authentification Firebase
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
 
-        // Initialize Firebase Auth
+        // Initialisation de Firebase Auth
         mAuth = FirebaseAuth.getInstance();
 
         signupName = findViewById(R.id.signup_name);
@@ -44,6 +47,9 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Crée un nouvel utilisateur avec les informations fournies.
+     */
     private void createUser() {
         String email = signupEmail.getText().toString().trim();
         String password = signupPassword.getText().toString().trim();
@@ -55,19 +61,19 @@ public class SignupActivity extends AppCompatActivity {
             mAuth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, task -> {
                         if (task.isSuccessful()) {
-                            // Sign up success, update UI with the signed-in user's information
+                            // Inscription réussie, mise à jour de l'interface utilisateur avec les informations de l'utilisateur inscrit
                             FirebaseUser user = mAuth.getCurrentUser();
                             Toast.makeText(SignupActivity.this, "Registration successful.",
                                     Toast.LENGTH_SHORT).show();
 
-                            // Optional: Save additional fields in Realtime Database
+                            // Optionnel: Enregistre des champs supplémentaires dans la base de données en temps réel
                             saveAdditionalUserData(user, name);
 
                             Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            // If sign up fails, display a message to the user.
+                            // Si l'inscription échoue, afficher un message à l'utilisateur.
                             Toast.makeText(SignupActivity.this, "Registration failed: " +
                                     task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                         }
@@ -75,10 +81,15 @@ public class SignupActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Enregistre des données utilisateur supplémentaires dans la base de données en temps réel.
+     * @param user L'utilisateur Firebase actuel.
+     * @param name Le nom de l'utilisateur.
+     */
     private void saveAdditionalUserData(FirebaseUser user, String name) {
         if (user != null) {
             DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("users");
-            HelperClass helperClass = new HelperClass(name, user.getEmail(), user.getUid()); // Assuming HelperClass is adjusted for Firebase Auth
+            HelperClass helperClass = new HelperClass(name, user.getEmail(), user.getUid()); // En supposant que HelperClass est ajusté pour Firebase Auth
             databaseReference.child(user.getUid()).setValue(helperClass);
         }
     }

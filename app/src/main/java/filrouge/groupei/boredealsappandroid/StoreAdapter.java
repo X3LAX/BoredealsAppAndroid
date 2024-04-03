@@ -9,12 +9,19 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.List;
 
+/**
+ * L'adaptateur pour la liste des magasins.
+ */
 public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHolder> {
     private List<Store> storeList;
 
+    /**
+     * Constructeur de l'adaptateur.
+     *
+     * @param initialStoreList La liste initiale des magasins.
+     */
     public StoreAdapter(List<Store> initialStoreList) {
         this.storeList = initialStoreList;
     }
@@ -65,11 +72,19 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
         return storeList.size();
     }
 
+    /**
+     * Met à jour les données de la liste des magasins.
+     *
+     * @param newStoreList La nouvelle liste de magasins à afficher.
+     */
     public void setData(List<Store> newStoreList) {
         this.storeList = newStoreList;
         notifyDataSetChanged();
     }
 
+    /**
+     * ViewHolder pour les éléments de la liste des magasins.
+     */
     public static class StoreViewHolder extends RecyclerView.ViewHolder {
         TextView nameTextView;
         TextView descriptionTextView;
@@ -84,6 +99,11 @@ public class StoreAdapter extends RecyclerView.Adapter<StoreAdapter.StoreViewHol
             addToFav = itemView.findViewById(R.id.addToFav);
         }
 
+        /**
+         * Associe les données du magasin à la vue.
+         *
+         * @param store Le magasin à afficher.
+         */
         public void bind(Store store) {
             nameTextView.setText(store.getName());
             descriptionTextView.setText(store.getDescription());

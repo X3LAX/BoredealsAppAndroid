@@ -14,6 +14,9 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+/**
+ * Activité de connexion utilisateur.
+ */
 public class LoginActivity extends AppCompatActivity {
 
     EditText loginUsername, loginPassword;
@@ -35,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
         loginButton.setOnClickListener(view -> {
             if (!validateUsername() | !validatePassword()) {
-                // Validation failed, handle the error
+                // La validation a échoué, gérer l'erreur
             } else {
                 loginUser();
             }
@@ -47,6 +50,10 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Valide le champ du nom d'utilisateur.
+     * @return true si le champ est valide, false sinon.
+     */
     public Boolean validateUsername() {
         String val = loginUsername.getText().toString();
         if (val.isEmpty()) {
@@ -58,6 +65,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Valide le champ du mot de passe.
+     * @return true si le champ est valide, false sinon.
+     */
     public Boolean validatePassword() {
         String val = loginPassword.getText().toString();
         if (val.isEmpty()) {
@@ -69,13 +80,16 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Authentifie l'utilisateur avec l'adresse e-mail et le mot de passe fournis.
+     */
     private void loginUser() {
         String email = loginUsername.getText().toString().trim();
         String password = loginPassword.getText().toString().trim();
 
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, task -> {
             if (task.isSuccessful()) {
-                // Sign in success, update UI with the signed-in user's information
+                // Connexion réussie, mise à jour de l'interface utilisateur avec les informations de l'utilisateur connecté
                 FirebaseUser user = mAuth.getCurrentUser();
                 Toast.makeText(LoginActivity.this, "Authentication success.",
                         Toast.LENGTH_SHORT).show();
@@ -84,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
                 finish();
             } else {
-                // If sign in fails, display a message to the user.
+                // Si la connexion échoue, afficher un message à l'utilisateur.
                 Toast.makeText(LoginActivity.this, "Authentication failed: " + task.getException().getMessage(),
                         Toast.LENGTH_SHORT).show();
                 loginPassword.setError("Invalid Credentials");

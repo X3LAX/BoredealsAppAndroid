@@ -16,15 +16,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.List;
 import java.util.ArrayList;
-
+import java.util.List;
 
 /**
  * Cette classe représente l'activité principale de l'application où les utilisateurs peuvent afficher
  * une liste de magasins disponibles.
  */
-
 public class StoreActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private StoreAdapter storeAdapter;

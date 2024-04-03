@@ -12,7 +12,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -40,19 +39,41 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+/**
+ * Cette activité affiche le code promotionnel et les informations sur un magasin sélectionné.
+ */
 public class CodeActivity extends AppCompatActivity {
 
     private DatabaseReference databaseReference;
     private String userId;
 
+    /**
+     * Méthode appelée lors de la création de l'activité.
+     *
+     * @param savedInstanceState L'état enregistré précédemment de l'activité.
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_code);
 
+        // Récupérer le magasin sélectionné depuis l'intent
         Store store = getIntent().getParcelableExtra("selectedStore");
         if (store == null) return;
 
+        // Initialisation des vues et chargement des données du magasin
+        initializeViews(store);
+
+        // Gestion de l'évaluation du magasin par l'utilisateur
+        handleRating(store);
+    }
+
+    /**
+     * Initialise les vues et charge les données du magasin.
+     *
+     * @param store Le magasin sélectionné.
+     */
+    private void initializeViews(Store store) {
         TextView textRecommendation = findViewById(R.id.textRecommendation);
         textRecommendation.setText(store.getName());
 
@@ -79,6 +100,7 @@ public class CodeActivity extends AppCompatActivity {
         TextView textPromoCode = findViewById(R.id.textPromoCode);
         textPromoCode.setText(store.getPromocode());
 
+        // Gestion du clic sur le bouton pour copier le code promo dans le presse-papiers
         TextView textCopier = findViewById(R.id.textCopier);
         textCopier.setOnClickListener(v -> {
             String codePromo = store.getPromocode();
@@ -93,16 +115,27 @@ public class CodeActivity extends AppCompatActivity {
             startActivity(browserIntent);
         });
 
+        // Gestion du clic sur le bouton pour afficher le code QR
         Button buttonGenerateQRCode = findViewById(R.id.boutonQrCode);
         buttonGenerateQRCode.setOnClickListener(v -> showQRCodeDialog(qrCodeBitmap));
 
         userId = getUserId();
-
         databaseReference = FirebaseDatabase.getInstance().getReference();
 
+        // Récupération de l'évaluation précédente du magasin et affichage dans la RatingBar
         float savedRating = getSavedRatingFromPreferences(String.valueOf(store.getId()));
         ratingBar.setRating(savedRating);
+    }
 
+    /**
+     * Gestion de l'évaluation du magasin par l'utilisateur.
+     *
+     * @param store Le magasin sélectionné.
+     */
+    private void handleRating(Store store) {
+        RatingBar ratingBar = findViewById(R.id.ratingBar);
+
+        // Enregistrement de l'évaluation dans Firebase et en local lorsqu'elle est modifiée
         ratingBar.setOnRatingBarChangeListener((ratingBar1, rating, fromUser) -> {
             saveRatingToFirebase(rating, String.valueOf(store.getId()));
             saveRatingLocally(rating, String.valueOf(store.getId()));
@@ -110,27 +143,14 @@ public class CodeActivity extends AppCompatActivity {
         });
     }
 
-    private String getUserId() {
-        return "user123";
-    }
-
-    private float getSavedRatingFromPreferences(String storeId) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        return sharedPreferences.getFloat(storeId, 0.0f);
-    }
-
-
-    private void saveRatingLocally(float rating, String storeId) {
-        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putFloat(storeId, rating);
-        editor.apply();
-    }
-
-    private void saveRatingToFirebase(float rating, String storeId) {
-        databaseReference.child("ratings").child(userId).child(storeId).setValue(rating);
-    }
-
+    /**
+     * Génère un code QR à partir du texte donné.
+     *
+     * @param text   Le texte à encoder dans le code QR.
+     * @param width  La largeur du code QR.
+     * @param height La hauteur du code QR.
+     * @return Le bitmap du code QR généré.
+     */
     private Bitmap generateQRCode(String text, int width, int height) {
         QRCodeWriter qrCodeWriter = new QRCodeWriter();
         try {
@@ -148,6 +168,11 @@ public class CodeActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Affiche une boîte de dialogue contenant le code QR.
+     *
+     * @param qrCodeBitmap Le bitmap du code QR à afficher.
+     */
     private void showQRCodeDialog(Bitmap qrCodeBitmap) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         LayoutInflater inflater = getLayoutInflater();
@@ -164,6 +189,11 @@ public class CodeActivity extends AppCompatActivity {
         buttonClose.setOnClickListener(v -> dialog.dismiss());
     }
 
+    /**
+     * Anime une vue en effectuant un zoom avant.
+     *
+     * @param cardView La vue à animer.
+     */
     private void animateCard(CardView cardView) {
         ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(cardView, View.SCALE_X, 0.8f, 1.0f);
         ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(cardView, View.SCALE_Y, 0.8f, 1.0f);
@@ -172,5 +202,49 @@ public class CodeActivity extends AppCompatActivity {
         animatorSet.playTogether(scaleXAnimator, scaleYAnimator);
         animatorSet.setDuration(500);
         animatorSet.start();
+    }
+
+    /**
+     * Récupère l'identifiant de l'utilisateur.
+     *
+     * @return L'identifiant de l'utilisateur.
+     */
+    private String getUserId() {
+        return "user123"; // Remplacer par la vraie méthode de récupération de l'ID de l'utilisateur
+    }
+
+    /**
+     * Récupère l'évaluation précédemment enregistrée du magasin depuis les préférences.
+     *
+     * @param storeId L'identifiant du magasin.
+     * @return L'évaluation précédemment enregistrée.
+     */
+    private float getSavedRatingFromPreferences(String storeId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        return sharedPreferences.getFloat(storeId, 0.0f);
+    }
+
+    /**
+     * Enregistre localement l'évaluation du magasin.
+     *
+     * @param rating  L'évaluation du magasin.
+     * @param storeId L'identifiant du magasin.
+     */
+    private void saveRatingLocally(float rating, String storeId) {
+        SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putFloat(storeId, rating);
+        editor.apply();
+    }
+
+    /**
+     * Enregistre l'évaluation du magasin dans Firebase.
+     *
+     * @param rating  L'évaluation du magasin.
+     * @param storeId L'identifiant du magasin.
+     */
+    private void saveRatingToFirebase(float rating, String storeId) {
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference();
+        databaseReference.child("ratings").child(userId).child(storeId).setValue(rating);
     }
 }
